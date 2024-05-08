@@ -1,0 +1,25 @@
+#!/bin/sh /etc/rc.common
+
+START=99
+STOP=90
+
+start() {
+    echo "Starting helium-gateway"
+	    /etc/helium_gateway/helium_gateway server > /dev/null &
+}
+
+stop() {
+    echo "Stopping helium-gateway"
+    PID=$(pgrep -f "/etc/helium_gateway/helium_gateway server")
+    if [ -n "$PID" ]; then
+        kill "$PID"
+    else
+        echo "helium_gateway server process not found"
+    fi
+}
+
+status() {
+    echo "Checking status of helium-gateway"
+    /etc/helium_gateway/helium_gateway info
+}
+		
